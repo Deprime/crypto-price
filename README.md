@@ -17,6 +17,8 @@ Small project for cypto currency price monitor.
 npm i
 ```
 
+- make a copy of `.env.sample` and rename it to `.env`
+- setupr your VITE_CRYPTOAPI_KEY
 - run development mode
 
 ```terminal
