@@ -1,0 +1,19 @@
+.xx-textarea {
+  @apply px-3;
+  @apply py-1.5;
+  @apply rounded-md;
+  @apply transition-all;
+  @apply ring-0;
+
+  font-weight: 600;
+
+  &.xx-textarea-default {
+    @apply text-slate-300;
+    @apply bg-slate-800;
+    // @apply highlight-white/5;
+
+    &:hover {
+      @apply bg-slate-700;
+    }
+  }
+}
