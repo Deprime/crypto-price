@@ -1,20 +1,25 @@
 <script setup lang="ts">
-  import { ref, computed } from 'vue';
+  import { ref, computed, onMounted } from 'vue';
   import { storeToRefs } from 'pinia'
+
+  // Api services
+  import cryptocompareApi from '@/api/cryptocompare';
 
   // Stores
   import { useTickerStore } from '@/stores/ticker';
 
-// Components
+  // Components
   import { Button, Input } from '@/components/ui';
 
   const { addTicker, socketResubscribe } = useTickerStore();
   const { loading } = storeToRefs(useTickerStore())
   const coin = ref("");
-  const solr = ref("");
+  const allCoins = ref({});
 
+  // Computed
   const canSubmit = computed(() => coin.value.length > 2);
 
+  // Methods
   /**
    * On submit
    */
@@ -24,16 +29,30 @@
       return;
     }
 
-    await addTicker(coin.value);
-    socketResubscribe();
-    coin.value = "";
+    try {
+      await addTicker(coin.value);
+    }
+    finally {
+      socketResubscribe();
+      coin.value = "";
+    }
   };
+
+  onMounted(async () => {
+    try {
+      // const response = await cryptocompareApi.getAllCoins();
+      console.log(1);
+    }
+    catch (error) {
+      throw new Error(error);
+    }
+  })
 </script>
 
 <template>
   <div class="p-0 sm:p-4">
     <form @submit="(e) => onSubmit(e)" class="bg-white sm:rounded-lg p-4">
-      <div class=" flex flex-row">
+      <div class="flex flex-row">
         <Input
           class="mb-3 basis-full sm:basis-1/2 md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5"
           label="Тикер"

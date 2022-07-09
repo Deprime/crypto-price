@@ -6,7 +6,7 @@ import type { TickerType } from '@/types/ticker';
 const CURRENCY = import.meta.env.VITE_CURRENCY;
 
 // Api service
-import tickerApi from '@/api/ticker';
+import cryptocompareApi from '@/api/cryptocompare';
 
 export const useTickerStore = defineStore('ticker', {
   state: () => ({
@@ -50,13 +50,14 @@ export const useTickerStore = defineStore('ticker', {
       if (!isTickerExists) {
         this.loading = true;
         try {
-          const { data } = await tickerApi.getPair(TID);
-          if (data.USD) {
-            const { USD } = data;
+          const { data } = await cryptocompareApi.getMultipleSymbolsData(TID);
+
+          if (data.RAW[TID].USD) {
             const ticker: TickerType = {
               id: TID,
               title: TID,
-              price: USD,
+              price: data.RAW[TID].USD.PRICE,
+              image: data.RAW[TID].USD.IMAGEURL,
             }
             this.list.push(ticker);
             this.clearActiveState();

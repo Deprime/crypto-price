@@ -28,6 +28,7 @@
   const isMobile = computed(() => documentWidth.value <= 640);
 
   // Methods
+  const isLive = (tickerId) => typeof liveTickers[tickerId] !== 'undefined';
   /**
    * Toggle ticker
    */
@@ -59,7 +60,12 @@
       if (parseInt(info[0]) === 2 && [1,2].includes(parseInt(info[4])) && !isNaN(parseFloat(info[5]))) {
         const coin = info[2];
         const price = parseFloat(info[5]);
-        liveTickers[coin] = price;
+        const flag = parseFloat(info[4]);
+        // liveTickers[coin] = price;
+        liveTickers[coin] = {
+          price,
+          flag,
+        };
 
         if (activeTickerId.value && activeTickerId.value === coin) {
           activeTickerChart.value.push(price);
@@ -89,9 +95,11 @@
       <TickerCard
         :id="ticker.id"
         :title="ticker.id"
-        :price="liveTickers[ticker.id] || ticker.price"
+        :price="liveTickers[ticker.id]?.price || ticker.price"
+        :flag="liveTickers[ticker.id]?.flag || null"
+        :image="ticker.image"
         :is-active="ticker.id === activeTickerId"
-        :is-live="(typeof liveTickers[ticker.id] !== 'undefined')"
+        :is-live="isLive(ticker.id)"
         @trash="removeTicker"
         @setActive="toggleTicker"
       />

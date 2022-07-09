@@ -2,6 +2,8 @@
   import { computed } from 'vue';
   import VueFeather from 'vue-feather';
 
+  const DOMAIN = import.meta.env.VITE_CRYPTO_DOMAIN;
+
   // Emits
   const emit = defineEmits(['trash', 'setActive']);
 
@@ -18,6 +20,14 @@
     price: {
       type: Number,
       required: true
+    },
+    image: {
+      type: String,
+      required: false
+    },
+    flag: {
+      type: [null, Number],
+      required: false,
     },
     isLive: {
       type: Boolean,
@@ -50,7 +60,7 @@
   /**
    * Set ticker active
    */
-  const onSetActive = (event: MouseEvent) => {
+  const onSetActive = (event: MouseEvent): void => {
     emit('setActive', props.id);
   }
 </script>
@@ -58,31 +68,44 @@
 <template>
   <figure :class="$$css">
     <div
-      class="cursor-pointer p-4"
+      class="cursor-pointer p-4 flex flex-row items-center"
       @click="onSetActive"
     >
-      <h4 class="text-sm leading-5 pb-2 pr-4 font-medium text-gray-900">
-        {{ title }}
-        <VueFeather
-          title="Streaming"
-          v-if="isLive"
-          type="radio"
-          size="18"
-          class="text-indigo-600 ml-1 -mb-1"
-        />
-      </h4>
-      <h3 class="text-3xl leading-6 font-medium text-gray-900">
-        {{ price ? `${price}$` : "" }}
-      </h3>
+      <img
+        v-if="image"
+        :src="`${DOMAIN}${image}`"
+        :alt="title"
+        width="40"
+        height="40"
+        class="mr-4"
+      />
+      <div>
+        <h4 class="text-sm leading-5 pb-2 pr-4 font-medium text-gray-900">
+          {{ title }}
+          <VueFeather
+            title="Streaming"
+            v-if="isLive"
+            type="radio"
+            size="18"
+            class="text-indigo-600 ml-1 -mb-1"
+          />
+        </h4>
+        <h3 class="text-3xl leading-6 font-medium text-gray-900">
+          {{ price ? `${price}$` : "" }}
+          <VueFeather
+            v-if="flag"
+            :type="(flag === 1) ? 'arrow-up' : 'arrow-down'"
+            :class="(flag === 1) ? 'text-green-600' : 'text-red-600'"
+          />
+        </h3>
+      </div>
     </div>
 
-    <div class="absolute top-4 right-4 inline-block z-10">
-      <VueFeather
-        @click="onTrash"
-        type="trash-2"
-        size="20"
-        class="text-gray-400 active:text-gray-500 transition-all duration-100 ease-out cursor-pointer"
-      />
-    </div>
+    <VueFeather
+      @click="onTrash"
+      type="trash-2"
+      size="20"
+      class="absolute top-4 right-4 inline-block z-10 text-gray-400 active:text-gray-500 transition-all duration-100 ease-out cursor-pointer"
+    />
   </figure>
 </template>
