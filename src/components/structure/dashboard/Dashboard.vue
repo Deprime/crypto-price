@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import "./Dashboard.scss";
+
   import { computed, onMounted, onBeforeUnmount, reactive, ref } from 'vue';
   import { storeToRefs } from 'pinia';
 
@@ -87,27 +89,29 @@
 </script>
 
 <template>
-  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:bgrid-cols-5 gap-4 p-4">
-    <div
-      v-for="ticker in getPaginatedList"
-      :key="`t-${ticker.id}`"
-    >
-      <TickerCard
-        :id="ticker.id"
-        :title="ticker.id"
-        :price="liveTickers[ticker.id]?.price || ticker.price"
-        :flag="liveTickers[ticker.id]?.flag || null"
-        :image="ticker.image"
-        :is-active="ticker.id === activeTickerId"
-        :is-live="isLive(ticker.id)"
-        @trash="removeTicker"
-        @setActive="toggleTicker"
-      />
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 p-4">
+    <TransitionGroup name="ticker-list">
+      <div
+        v-for="ticker in getPaginatedList"
+        :key="`t-${ticker.id}`"
+      >
+        <TickerCard
+          :id="ticker.id"
+          :title="ticker.id"
+          :price="liveTickers[ticker.id]?.price || ticker.price"
+          :flag="liveTickers[ticker.id]?.flag || null"
+          :image="ticker.image"
+          :is-active="ticker.id === activeTickerId"
+          :is-live="isLive(ticker.id)"
+          @trash="removeTicker"
+          @setActive="toggleTicker"
+        />
 
-      <div v-if="activeTickerId && ticker.id === activeTickerId  && isMobile" class="pt-4 sm:py-2 sm:px-4">
-        <ActiveTickerChart />
+        <div v-if="activeTickerId && ticker.id === activeTickerId  && isMobile" class="pt-4 sm:py-2 sm:px-4">
+          <ActiveTickerChart />
+        </div>
       </div>
-    </div>
+    </TransitionGroup>
   </section>
 
   <div v-if="activeTickerId && !isMobile" class="pt-4 sm:py-2 sm:px-4">
