@@ -3,8 +3,10 @@
   import { Variants, Sizes } from './types';
 
   const varaintCssSet = {
-    secondary: "bg-white text-gray-700 border border-solid border-gray-300 hover:bg-gray-100 hover:border-gray-400 active:border-gray-500",
+    // secondary: "bg-white text-gray-700 border border-solid border-gray-300 hover:bg-gray-100 hover:border-gray-400 active:border-gray-500",
+    secondary: "bg-white text-gray-700 ring-inset ring-gray-300 ring-1 hover:bg-gray-100 hover:ring-gray-400 active:ring-gray-500",
     primary: "bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800",
+    danger: "bg-gray-200 text-red-600 hover:bg-red-700 hover:text-white active:bg-red-800",
   }
   const sizeCssSet = {
     md: "px-4 py-2 text-sm leading-5 font-medium",

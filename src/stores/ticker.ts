@@ -16,7 +16,7 @@ export const useTickerStore = defineStore('ticker', {
     loading: false,
     search: <string|number> "",
     page: 1,
-    perPage: 6,
+    perPage:  useStorage('perPage', 6),
     socket: null,
   }),
 
@@ -91,6 +91,14 @@ export const useTickerStore = defineStore('ticker', {
         }
         await this.socketResubscribe();
       }
+    },
+
+    /**
+     * Clear ticker list
+     */
+    async clearTickerList() {
+      this.list = [];
+      await this.socketSubscribe();
     },
 
     /**

@@ -6,4 +6,5 @@ export enum Sizes {
 export enum Variants {
   secondary = 'secondary',
   primary = 'primary',
+  danger = 'danger',
 }

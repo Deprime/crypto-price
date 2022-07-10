@@ -4,12 +4,14 @@
   import { storeToRefs } from 'pinia'
 
   // Components
-  import { Header, Search, Dashboard, Footer } from '@/components/structure';
+  import { Header, Search, Dashboard, Footer, Settings } from '@/components/structure';
 
   // Stores
   import { useTickerStore } from '@/stores/ticker';
+  import { useSettingsStore } from '@/stores/settings';
 
-  const { list, tickerList } = storeToRefs(useTickerStore())
+  const { list, tickerList, perPage } = storeToRefs(useTickerStore());
+  const { visible } = storeToRefs(useSettingsStore());
 </script>
 
 <template>
@@ -20,6 +22,8 @@
 
   <main class="pb-[90px]">
     <Dashboard />
-    <Footer v-if="tickerList.length > 6" />
+    <Footer v-if="tickerList.length > perPage" />
   </main>
+
+  <Settings v-show="visible" />
 </template>

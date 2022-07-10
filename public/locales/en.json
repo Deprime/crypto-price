@@ -1,0 +1,26 @@
+{
+  "ticker": "Ticker",
+  "add_placeholder": "For example",
+  "find_ticker": "Find ticker",
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "clear_dashboard": "Clear dashboard",
+    "clear_info": "The ticker list will be cleared ({0}) units",
+    "results_per_page": "Number of tickers per page"
+  },
+  "pagination": {
+    "displayed": "Displayed",
+    "results_of": " results of {1}",
+    "pages_of": "Page {0} of {1}"
+  },
+
+  "actions": {
+    "add": "Add",
+    "prev": "Prev",
+    "next": "Next",
+    "clear": "Clear",
+    "approve": "Approve",
+    "cancel": "Cancel"
+  }
+}

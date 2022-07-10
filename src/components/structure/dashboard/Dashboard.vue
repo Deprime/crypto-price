@@ -16,8 +16,8 @@
 
   const { tickerList, activeTickerId, activeTickerChart, page, perPage,  } = storeToRefs(useTickerStore())
   const { removeTicker, setTickerActive, clearActiveState, setSocket, socketSubscribe, socketUnsubscribe } = useTickerStore();
-  let liveTickers = reactive({});
   const documentWidth = ref(0);
+  let liveTickers = reactive({});
 
   // Computed
   const getPaginatedList = computed(() => {
@@ -31,6 +31,7 @@
 
   // Methods
   const isLive = (tickerId) => typeof liveTickers[tickerId] !== 'undefined';
+
   /**
    * Toggle ticker
    */
@@ -44,7 +45,8 @@
   }
 
   /**
-   *
+   * On resize
+   * TODO: rewrite to VueUse
    */
   const onResize = () => {
     documentWidth.value = document.body.clientWidth;
@@ -106,8 +108,10 @@
           @trash="removeTicker"
           @setActive="toggleTicker"
         />
-
-        <div v-if="activeTickerId && ticker.id === activeTickerId  && isMobile" class="pt-4 sm:py-2 sm:px-4">
+        <div
+          v-if="activeTickerId && ticker.id === activeTickerId  && isMobile"
+          class="pt-4 sm:py-2 sm:px-4"
+        >
           <ActiveTickerChart />
         </div>
       </div>

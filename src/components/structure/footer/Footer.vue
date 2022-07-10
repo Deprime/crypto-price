@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { computed } from 'vue';
   import { storeToRefs } from 'pinia'
+  import { useI18n } from "vue-i18n";
 
   // Components
   import { Button } from '@/components/ui';
@@ -8,6 +9,7 @@
   // Stores
   import { useTickerStore } from '@/stores/ticker';
 
+  const { t } = useI18n();
   const { page, perPage, tickerList } = storeToRefs(useTickerStore());
   const { setPage } = useTickerStore();
 
@@ -34,19 +36,19 @@
         @click="prevPage"
         :disabled="!hasPrev"
       >
-        Назад
+        {{ $t('actions.prev') }}
       </Button>
     </div>
     <div class="basis-2/4 lg:basis-full text-center lg:text-left lg:order-first text-xs sm:text-sm">
-      Показано
-      <span class="block sm:inline-block"> 6 результатов из {{ tickerList.length }}</span> <span class="block sm:inline-block">[страница {{ page }} из {{ totalPages }}]</span>
+      {{ $t('pagination.displayed') }}
+      <span class="block sm:inline-block"> {{ $t('pagination.results_of', [perPage, tickerList.length]) }}</span> <span class="block sm:inline-block">[{{ $t('pagination.pages_of', [page, totalPages]) }}]</span>
     </div>
     <div class="basis-1/4 lg:basis-auto text-right">
       <Button
         @click="nextPage"
         :disabled="!hasNext"
       >
-        Вперед
+        {{ $t('actions.next') }}
       </Button>
     </div>
   </footer>

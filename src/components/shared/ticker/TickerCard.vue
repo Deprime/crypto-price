@@ -46,7 +46,8 @@
   // Computed
   const $$formattedPrice = computed(() => {
     return (props.price.toString().length <= props.pricePrecision)
-      ? props.price : parseFloat(props.price.toPrecision(props.pricePrecision));
+      ? props.price
+      : parseFloat(props.price.toPrecision(props.pricePrecision));
   });
 
   const $$css = computed(() => {
@@ -84,8 +85,8 @@
         v-if="image"
         :src="`${DOMAIN}${image}`"
         :alt="title"
-        width="40"
-        height="40"
+        width="30"
+        height="30"
         class="mr-4"
       />
       <div>
@@ -115,7 +116,7 @@
       @click="onTrash"
       type="trash-2"
       size="20"
-      class="absolute top-4 right-4 inline-block z-10 bg-white text-gray-400 active:text-gray-500 transition-all duration-100 ease-out cursor-pointer"
+      class="absolute top-4 right-4 z-10 bg-white icon"
     />
   </figure>
 </template>

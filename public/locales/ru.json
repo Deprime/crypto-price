@@ -1,0 +1,25 @@
+{
+  "ticker": "Тикер",
+  "add_placeholder": "Например",
+  "find_ticker": "Найти тикер",
+  "settings": {
+    "title": "Настройки",
+    "language": "Язык",
+    "clear_dashboard": "Очистить дашборд",
+    "clear_info": "Список тикеров будет очищен ({0}) шт.",
+    "results_per_page": "Количество тикеров на странице"
+  },
+  "pagination": {
+    "displayed": "Показано",
+    "results_of": "{0} результатов из {1}",
+    "pages_of": "страница {0} из {1}"
+  },
+  "actions": {
+    "add": "Добавить",
+    "prev": "Назад",
+    "next": "Вперед",
+    "clear": "Очистить",
+    "approve": "Подтвердить",
+    "cancel": "Отмена"
+  }
+}

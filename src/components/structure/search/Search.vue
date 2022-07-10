@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { storeToRefs } from 'pinia'
   import { ref } from 'vue';
+  import { useI18n } from "vue-i18n";
   import VueFeather from 'vue-feather';
 
   // Components
@@ -9,13 +10,14 @@
   // Stores
   import { useTickerStore } from '@/stores/ticker';
 
-  const { search } = storeToRefs(useTickerStore())
+  const { t } = useI18n();
+  const { search } = storeToRefs(useTickerStore());
 </script>
 
 <template>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 pt-4 px-4 sm:pt-0">
     <Input
-      placeholder="Найти тикер"
+      :placeholder="$t('find_ticker')"
       v-model="search"
     >
       <template v-slot:prepend>

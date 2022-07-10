@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { ref, computed, onMounted } from 'vue';
   import { storeToRefs } from 'pinia';
+  import { useI18n } from "vue-i18n";
   import VueFeather from 'vue-feather';
 
   // Api services
@@ -8,12 +9,17 @@
 
   // Stores
   import { useTickerStore } from '@/stores/ticker';
+  import { useSettingsStore } from '@/stores/settings';
 
   // Components
   import { Button, Input } from '@/components/ui';
 
+  const { t } = useI18n();
   const { addTicker, socketResubscribe } = useTickerStore();
-  const { loading } = storeToRefs(useTickerStore())
+  const { loading } = storeToRefs(useTickerStore());
+  const { toggleSettings } = useSettingsStore();
+
+  // Data
   const coin = ref("");
   const allCoins = ref({});
 
@@ -56,8 +62,8 @@
         <div class="basis-full sm:basis-1/2 md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5 sm:pr-2 md:pr-2 lg:pr-4">
           <Input
             class="mb-3 "
-            label="Тикер"
-            placeholder="Например DOGE"
+            :label="$t('ticker')"
+            :placeholder="`${$t('actions.add')} DOGE`"
             :value="coin"
             v-model="coin"
             :loading="loading"
@@ -70,9 +76,14 @@
               type="submit"
               :disabled="loading || !canSubmit"
             >
-              Добавить
+              {{ $t('actions.add') }}
             </Button>
-            <VueFeather type="settings" class="absolute top-3 right-3 z-10 text-gray-400 active:text-gray-500 transition-all duration-100 ease-out cursor-pointer" />
+
+            <VueFeather
+              type="settings"
+              class="absolute top-3 right-3 z-10 text-gray-400 active:text-gray-500 transition-all duration-100 ease-out cursor-pointer"
+              @click="toggleSettings"
+            />
           </div>
         </div>
       </div>
